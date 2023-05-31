@@ -5,6 +5,22 @@ const COL = 10;
 const SQ = 30;
 const VACANT = "white";
 
+const moveButtons = document.getElementById('moveButtons');
+
+    function adjustMoveButtonsPosition() {
+      if (window.innerWidth <= 768) {
+        moveButtons.classList.add('game-controls-mobile');
+      } else {
+        moveButtons.classList.remove('game-controls-mobile');
+      }
+    }
+
+    // Adjust move buttons position on initial page load
+    adjustMoveButtonsPosition();
+
+    // Adjust move buttons position on window resize
+    window.addEventListener('resize', adjustMoveButtonsPosition);
+
 canvas.style.background = "#f0f0f0"; // Set a background color
 // canvas.style.backgroundImage = "url('background.jpg')"; // Set a background image
 canvas.style.width = "300px"; // Set canvas width
@@ -411,6 +427,67 @@ function control(event) {
     p.moveDown();
   }
 }
+const moveLeftButton = document.getElementById("moveLeftButton");
+const rotateButton = document.getElementById("rotateButton");
+const moveRightButton = document.getElementById("moveRightButton");
+const moveDownButton = document.getElementById("moveDownButton");
+
+let holdInterval; // Variable to store the hold interval
+
+// Function to handle button click or touch end
+function handleButtonClick() {
+  clearInterval(holdInterval); // Clear the hold interval
+  const buttonId = this.id;
+  if (buttonId === "moveLeftButton") {
+    p.moveLeft();
+  } else if (buttonId === "rotateButton") {
+    p.rotate();
+  } else if (buttonId === "moveRightButton") {
+    p.moveRight();
+  } else if (buttonId === "moveDownButton") {
+    p.moveDown();
+  }
+}
+
+// Function to handle touch and hold
+function handleTouchHold() {
+  const buttonId = this.id;
+  if (holdInterval) {
+    clearInterval(holdInterval); // Clear the hold interval if it's already set
+  }
+  holdInterval = setInterval(function() {
+    if (buttonId === "moveLeftButton") {
+      p.moveLeft();
+    } else if (buttonId === "rotateButton") {
+      p.rotate();
+    } else if (buttonId === "moveRightButton") {
+      p.moveRight();
+    } else if (buttonId === "moveDownButton") {
+      p.moveDown();
+    }
+  }, 200); // Adjust the interval duration as per your needs
+}
+
+// Add click event listeners
+moveLeftButton.addEventListener("click", handleButtonClick);
+rotateButton.addEventListener("click", handleButtonClick);
+moveRightButton.addEventListener("click", handleButtonClick);
+moveDownButton.addEventListener("click", handleButtonClick);
+
+// Add touch event listeners for touch and hold
+moveLeftButton.addEventListener("touchstart", handleTouchHold);
+rotateButton.addEventListener("touchstart", handleTouchHold);
+moveRightButton.addEventListener("touchstart", handleTouchHold);
+moveDownButton.addEventListener("touchstart", handleTouchHold);
+moveLeftButton.addEventListener("touchend", handleButtonClick);
+rotateButton.addEventListener("touchend", handleButtonClick);
+moveRightButton.addEventListener("touchend", handleButtonClick);
+moveDownButton.addEventListener("touchend", handleButtonClick);
+moveLeftButton.addEventListener("touchcancel", handleButtonClick);
+rotateButton.addEventListener("touchcancel", handleButtonClick);
+moveRightButton.addEventListener("touchcancel", handleButtonClick);
+moveDownButton.addEventListener("touchcancel", handleButtonClick);
+
 
 // drop the piece every 1sec
 let dropStart = Date.now();
