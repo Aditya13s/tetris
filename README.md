@@ -1,2 +1,2 @@
 # Tetris
-A web based game 
+A web based tetris game 
