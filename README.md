@@ -1,2 +1,2 @@
 # Tetris
-A web based tetris game by Aditya.
+A web based tetris game.
